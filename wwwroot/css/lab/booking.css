@@ -93,6 +93,9 @@
   height: 32px;
   display: flex;
   align-items: center;
+}
+
+.timeline-selected {
   background: var(--main50);
 }
 
@@ -123,4 +126,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.error {
+  color: var(--red500);
 }

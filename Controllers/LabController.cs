@@ -4,34 +4,130 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using DonutzStudio.Data;
 using DonutzStudio.Models;
 
 namespace DonutzStudio.Controllers
 {
     public class LabController : Controller
     {
-        private readonly ILogger<LabController> _logger;
+        private readonly DonutzStudioContext _context;
 
-        public LabController(ILogger<LabController> logger)
+        public LabController(DonutzStudioContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        // GET: /Lab
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Lab.ToListAsync());
+        }
+
+        // GET: /Lab/Booking/[Id]
+        public async Task<IActionResult> Booking(int? id)
+        {
+            var lab = await _context.Lab.FindAsync(id);
+            if (lab == null) return NotFound();
+
+            string[] MonthName = {
+                "ม.ค.",
+                "ก.พ.",
+                "มี.ค.",
+                "เม.ย.",
+                "พ.ค.",
+                "มิ.ย.",
+                "ก.ค.",
+                "ส.ค.",
+                "ก.ย.",
+                "ต.ค.",
+                "พ.ย.",
+                "ธ.ค.",
+            };
+
+            List<dynamic> timelines = new List<dynamic>();
+            for (var i = 0; i < 7; i++)
+            {
+                var date = DateTime.Today.AddDays(i);
+                var bookings = _context.Booking.Where(m => m.LabId == id && m.Date == date);
+                var time0 = bookings.Where(m => m.Time == 0).Count();
+                var time1 = bookings.Where(m => m.Time == 1).Count();
+                var time2 = bookings.Where(m => m.Time == 2).Count();
+                var myBookings = bookings.Where(m => m.UserId == 1);
+                var selected0 = myBookings.Where(m => m.Time == 0).Count() != 0;
+                var selected1 = myBookings.Where(m => m.Time == 1).Count() != 0;
+                var selected2 = myBookings.Where(m => m.Time == 2).Count() != 0;
+                timelines.Add(new
+                {
+                    Date = date.Date,
+                    Day = date.Day,
+                    Month = MonthName[date.Month - 1],
+                    Year = date.Year + 543,
+                    Time0 = lab.ItemCount - time0,
+                    Time1 = lab.ItemCount - time1,
+                    Time2 = lab.ItemCount - time2,
+                    Selected0 = selected0,
+                    Selected1 = selected1,
+                    Selected2 = selected2,
+                });
+            }
+            ViewBag.Timelines = timelines;
+            return View(lab);
+        }
+
+        // POST: Lab/Booking
+        [HttpPost]
+        public async Task<JsonResult> Booking([FromBody] BookingForm form)
+        {
+            if (!ModelState.IsValid) return Json("Error");
+
+            foreach (var book in form.BookingList)
+            {
+                for (var i = 0; i < book.Booking.Count(); i++)
+                {
+                    if (book.Booking[i] == false) continue;
+
+                    Booking booking = new Booking();
+                    booking.LabId = form.LabId;
+                    booking.UserId = form.UserId;
+                    booking.Date = DateTime.Parse(book.Date);
+                    booking.Time = i;
+                    if (!IsBookingExist(booking)) _context.Add(booking);
+                }
+            }
+            await _context.SaveChangesAsync();
+            return Json("OK");
+        }
+
+        // Utilities
+        private bool IsBookingExist(Booking booking)
+        {
+            return _context.Booking.Any(m => m.LabId == booking.LabId && m.UserId == booking.UserId && m.Date == booking.Date && m.Time == booking.Time);
+        }
+
+
+        //
+        // ===== FOR DEVELOPMENT =====
+        //
+        // GET: /Lab/Create
+        public IActionResult Create()
         {
             return View();
         }
 
-        public IActionResult Booking()
+        // POST: Lab/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,ItemName,ItemCount")] Lab lab)
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (ModelState.IsValid)
+            {
+                _context.Add(lab);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(lab);
         }
     }
 }
