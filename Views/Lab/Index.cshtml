@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "ห้องปฏิบัติการ";
+    dynamic[] Labs = {
+new { name = "ห้องแอลฟา", color = "crimson" },
+new { name = "ห้องเบต้า", color = "deepskyblue"},
+new { name = "ห้องแกมมา", color = "gold" },
+new { name = "ห้องสี่", color = "lightseagreen" },
+new { name ="ห้องห้า", color = "plum" }};
+}
+
+<link rel="stylesheet" href="~/css/lab/index.css" />
+
+<div>
+    <h1>ห้องปฏิบัติการ</h1>
+    <div class="wrapper">
+        @foreach (dynamic Lab in Labs)
+        {
+            <a asp-controller="Lab" asp-action="Booking">
+                <div class="lab-card shadow">
+                    <img class="lab-img" style="background:@Lab.color" />
+                    <div class="lab-name">@Lab.name</div>
+                </div>
+            </a>
+        }
+    </div>
+</div>

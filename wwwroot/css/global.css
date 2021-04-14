@@ -1,0 +1,49 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap');
+
+/* Global styles
+-------------------------------------------------- */
+:root {
+  --gray800: #1e293b;
+  --gray400: #9ca3af;
+  --gray300: #d1d5db;
+  --gray200: #e5e7eb;
+  --gray100: #f3f4f6;
+
+  --main600: #2563eb;
+  --main500: #3b82f6;
+  --main100: #dbeafe;
+  --main50: #eff6ff;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  color: var(--gray800);
+  background: var(--gray100);
+  margin: 0;
+  font-family: 'Roboto', 'Kanit', sans-serif;
+  font-size: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}

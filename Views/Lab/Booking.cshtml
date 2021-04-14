@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "ห้องเหี้ยไรสักอย่าง";
+    dynamic[] Mock = { "", "", "", "", "" };
+}
+
+<link rel="stylesheet" href="~/css/lab/booking.css" />
+
+<div>
+    <h1>
+        <a class="back-btn" asp-controller="Lab" asp-action="Index">ห้องปฏิบัติการ</a>
+        <span class="slash"> / </span>
+        ห้องเหี้ยไรสักอย่าง
+    </h1>
+    <div class="container">
+        <img class="lab-img" />
+        <div class="booking-zone shadow-lg">
+            <h3>เลือกช่วงเวลาที่จะใช้งาน</h3>
+            <div class="date-zone">
+                @foreach (var _ in Mock)
+                {
+                    <div class="date-card">
+                        <div class="date">
+                            <span class="day">12</span>
+                            <span class="month">เม.ย.</span>
+                            <span class="year">2564</span>
+                        </div>
+                        <div class="timeline-zone">
+                            <div class="timeline">
+                                <span class="w-60 check-zone"><input type="checkbox" /></span>
+                                <span class="w-80">ช่วงเช้า</span>
+                                <span class="w-100">อุปกรณ์คงเหลือ</span>
+                                <span class="w-50">4</span>
+                                <span>ไม่สามารถจองได้</span>
+                            </div>
+                            <div class="timeline">
+                                <span class="w-60 check-zone"><input type="checkbox" /></span>
+                                <span class="w-80">ช่วงบ่าย</span>
+                                <span class="w-100">อุปกรณ์คงเหลือ</span>
+                                <span class="w-50">4</span>
+                                <span>ไม่สามารถจองได้</span>
+                            </div>
+                            <div class="timeline">
+                                <span class="w-60 check-zone"><input type="checkbox" /></span>
+                                <span class="w-80">ช่วงค่ำ</span>
+                                <span class="w-100">อุปกรณ์คงเหลือ</span>
+                                <span class="w-50">4</span>
+                                <span>ไม่สามารถจองได้</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="footer">
+                <button class="btn-gray">ยกเลิก</button>
+                <span style="width: 10px;"></span>
+                <button class="btn">ยืนยันการจอง</button>
+            </div>
+        </div>
+    </div>
+</div>
