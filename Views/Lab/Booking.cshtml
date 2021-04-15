@@ -12,6 +12,20 @@
         return o.GetType().GetProperty(propertyName).GetValue(o, null);
     }
 
+    public bool CheckAvailable(object date, int i)
+    {
+        return
+        GetObjectValue(date, "Time" + i.ToString()) > 0 &&
+        DateTime.Compare(DateTime.Now, GetObjectValue(date, "Date").Date.AddHours(9 + i * 4)) < 0;
+    }
+
+    public bool CheckDisabled(object date, int i)
+    {
+        return
+        GetObjectValue(date, "Selected" + i.ToString()) ||
+        !CheckAvailable(date, i);
+    }
+
     public string CheckSelectedTime(object o, int i)
     {
         return GetObjectValue(o, "Selected" + i.ToString()) ? "timeline-selected" : "";
@@ -46,11 +60,11 @@
                                 <div class="timeline @CheckSelectedTime(Date, i)">
                                     <span class="w-60 check-zone"><input type="checkbox" onchange="toggleCheckbox(event)"
                                     checked="@GetObjectValue(Date, "Selected" + i.ToString())"
-                                    disabled="@GetObjectValue(Date, "Selected" + i.ToString())" /></span>
+                                    disabled="@CheckDisabled(Date, i)" /></span>
                                     <span class="w-80">@Times.ElementAt(i)</span>
                                     <span class="w-100">อุปกรณ์คงเหลือ</span>
                                     <span class="w-50">@GetObjectValue(Date, "Time" + i.ToString())</span>
-                                    @if (GetObjectValue(Date, "Time" + i.ToString()) == 0)
+                                    @if (!CheckAvailable(Date, i))
                                     {
                                         <span class="error">ไม่สามารถจองได้</span>
                                     }

@@ -32,25 +32,16 @@ namespace DonutzStudio.Controllers
             if (lab == null) return NotFound();
 
             string[] MonthName = {
-                "ม.ค.",
-                "ก.พ.",
-                "มี.ค.",
-                "เม.ย.",
-                "พ.ค.",
-                "มิ.ย.",
-                "ก.ค.",
-                "ส.ค.",
-                "ก.ย.",
-                "ต.ค.",
-                "พ.ย.",
-                "ธ.ค.",
+                "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.",
+                "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.",
+                "พ.ย.", "ธ.ค.",
             };
 
             List<dynamic> timelines = new List<dynamic>();
             for (var i = 0; i < 7; i++)
             {
-                var date = DateTime.Today.AddDays(i);
-                var bookings = _context.Booking.Where(m => m.LabId == id && m.Date == date);
+                var date = DateTime.Now.AddDays(i);
+                var bookings = _context.Booking.Where(m => m.LabId == id && m.Date.Date == date.Date);
                 var time0 = bookings.Where(m => m.Time == 0).Count();
                 var time1 = bookings.Where(m => m.Time == 1).Count();
                 var time2 = bookings.Where(m => m.Time == 2).Count();
@@ -60,7 +51,7 @@ namespace DonutzStudio.Controllers
                 var selected2 = myBookings.Where(m => m.Time == 2).Count() != 0;
                 timelines.Add(new
                 {
-                    Date = date.Date,
+                    Date = date,
                     Day = date.Day,
                     Month = MonthName[date.Month - 1],
                     Year = date.Year + 543,

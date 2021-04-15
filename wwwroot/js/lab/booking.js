@@ -14,8 +14,11 @@ const resetBtn = document.querySelector('#reset-btn')
 
 resetBtn.onclick = () => {
   form.reset()
-  const timelines = form.querySelectorAll('.timeline')
-  timelines.forEach((t) => t.classList.remove('timeline-selected'))
+  const checkboxs = form.querySelectorAll('input')
+  checkboxs.forEach((c) => {
+    if (!c.disabled)
+      c.parentElement.parentElement.classList.remove('timeline-selected')
+  })
 }
 
 /**
