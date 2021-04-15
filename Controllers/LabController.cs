@@ -94,7 +94,7 @@ namespace DonutzStudio.Controllers
         // Utilities
         private bool IsBookingExist(Booking booking)
         {
-            return _context.Booking.Any(m => m.LabId == booking.LabId && m.UserId == booking.UserId && m.Date == booking.Date && m.Time == booking.Time);
+            return _context.Booking.Any(m => m.LabId == booking.LabId && m.UserId == booking.UserId && m.Date.Date == booking.Date.Date && m.Time == booking.Time);
         }
 
 
