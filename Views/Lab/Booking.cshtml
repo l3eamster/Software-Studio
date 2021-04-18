@@ -43,7 +43,8 @@
     </h1>
     <div class="container">
         <img class="lab-img" />
-        <form class="booking-zone shadow-lg" id="form" onsubmit="(() => submitHandler(event, @Model.Id))(event)">
+        <form class="booking-zone shadow-lg" id="form" onsubmit="(() => submitHandler(event, @Model.Id, 
+            `@ViewBag.Username`, @ViewBag.UserId))(event)">
             <h3>เลือกช่วงเวลาที่จะใช้งาน</h3>
             <div class="date-zone">
                 @foreach (var Date in ViewBag.Timelines)

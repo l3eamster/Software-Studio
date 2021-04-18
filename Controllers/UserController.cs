@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using DonutzStudio.Data;
 using DonutzStudio.Models;
 
@@ -143,6 +145,22 @@ namespace DonutzStudio.Controllers
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: User/Login
+        public IActionResult Login()
+        {
+            HttpContext.Session.SetString("Username", "i.thanthan");
+            HttpContext.Session.SetInt32("UserId", 1);
+            return Redirect("/");
+        }
+
+        // GET: User/Logout
+        public IActionResult Logout()
+        {
+            HttpContext.Session.SetString("Username", "");
+            HttpContext.Session.SetInt32("UserId", -1);
+            return Redirect("/");
         }
 
         private bool UserExists(int id)

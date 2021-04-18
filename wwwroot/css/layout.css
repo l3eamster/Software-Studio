@@ -145,6 +145,9 @@
 }
 
 .navbar-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 36px;
   color: var(--main500);
   background: var(--main50);

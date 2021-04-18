@@ -24,8 +24,14 @@ resetBtn.onclick = () => {
 /**
  * Form handler
  */
-async function submitHandler(event, labId) {
+async function submitHandler(event, labId, username, userId) {
   event.preventDefault()
+
+  if (!username) {
+    alert('ไปล็อคอินก๊อนน')
+    window.location = 'https://localhost:5001/'
+    return
+  }
 
   const result = []
   const timelines = form.querySelectorAll('.timeline-zone')
@@ -49,7 +55,7 @@ async function submitHandler(event, labId) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ UserId: 1, LabId: labId, BookingList: result }),
+    body: JSON.stringify({ UserId: userId, LabId: labId, BookingList: result }),
   })
   const data = await res.text()
   if (data === 'Error') alert('Error!')

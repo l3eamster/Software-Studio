@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using DonutzStudio.Data;
 using DonutzStudio.Models;
 
@@ -28,6 +30,7 @@ namespace DonutzStudio.Controllers
         // GET: /Lab/Booking/[Id]
         public async Task<IActionResult> Booking(int? id)
         {
+            var userId = HttpContext.Session.GetInt32("UserId");
             var lab = await _context.Lab.FindAsync(id);
             if (lab == null) return NotFound();
 
@@ -45,7 +48,7 @@ namespace DonutzStudio.Controllers
                 var time0 = bookings.Where(m => m.Time == 0).Count();
                 var time1 = bookings.Where(m => m.Time == 1).Count();
                 var time2 = bookings.Where(m => m.Time == 2).Count();
-                var myBookings = bookings.Where(m => m.UserId == 1);
+                var myBookings = bookings.Where(m => m.UserId == userId);
                 var selected0 = myBookings.Where(m => m.Time == 0).Count() != 0;
                 var selected1 = myBookings.Where(m => m.Time == 1).Count() != 0;
                 var selected2 = myBookings.Where(m => m.Time == 2).Count() != 0;
@@ -64,6 +67,8 @@ namespace DonutzStudio.Controllers
                 });
             }
             ViewBag.Timelines = timelines;
+            ViewBag.Username = HttpContext.Session.GetString("Username");
+            ViewBag.UserId = HttpContext.Session.GetString("UserId");
             return View(lab);
         }
 

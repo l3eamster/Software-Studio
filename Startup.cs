@@ -1,5 +1,6 @@
 using DonutzStudio.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,18 @@ namespace DonutzStudio
 
             services.AddDbContext<DonutzStudioContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DonutzStudioContext")));
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+                options.Cookie.HttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +60,8 @@ namespace DonutzStudio
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
 

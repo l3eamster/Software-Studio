@@ -1,4 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+@functions{
+    string CheckActiveLink(string current)
+    {
+        String path = Html.ViewContext.RouteData.Values["Controller"].ToString();
+        return path == current ? "navbar-link-item-active" : "";
+    }
+
+    bool CheckAuthen()
+    {
+        return Context.Session.GetString("Username")?.Length > 0;
+    }
+
+    public static dynamic GetObjectValue(object o, string propertyName)
+    {
+        return o.GetType().GetProperty(propertyName).GetValue(o, null);
+    }
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -17,20 +38,21 @@
                 <span>Donutz</span><span>:</span><span>studio</span>
             </a>
             <ul class="navbar-link">
-                @functions{
-                    public string CheckActiveLink(string current)
-                    {
-                        String path = Html.ViewContext.RouteData.Values["Controller"].ToString();
-                        return path == current ? "navbar-link-item-active" : "";
-                    }
-                }
                 <a class="navbar-link-item @CheckActiveLink("Lab")" data-link=" lab" asp-area="" asp-controller="Lab"
                     asp-action="Index">ห้องปฎิบัติการ</a>
                 <a class="navbar-link-item @CheckActiveLink("MyBooking")" data-link="mybooking" asp-area=""
                     asp-controller="MyBooking" asp-action="Index">การจองของฉัน</a>
             </ul>
-            <span class="navbar-account">j.yanothai</span>
-            <button class="navbar-btn">ออกจากระบบ</button>
+            @if (CheckAuthen())
+            {
+                <span class="navbar-account">@Context.Session.GetString("Username")</span>
+                <a class="navbar-btn" asp-controller="User" asp-action="Logout">ออกจากระบบ</a>
+            }
+            else
+            {
+                <a class="navbar-btn" asp-controller="User" asp-action="Login">ลงชื่อเข้าใช้</a>
+            }
+
         </div>
     </nav>
     <div class="layout">
