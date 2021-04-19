@@ -1,7 +1,31 @@
 ﻿@{
     ViewData["Title"] = "การจองของฉัน";
 }
+@functions
+{
+    public dynamic GetObjectValue(object o, string propertyName)
+    {
+        return o.GetType().GetProperty(propertyName).GetValue(o,
+        null);
+    }
+}
+
+<link rel="stylesheet" href="~/css/mybooking.css" />
 
 <div>
     <h1>การจองของฉัน</h1>
+    @foreach (var bookDate in ViewBag.Mybooking)
+    {
+        <div>
+            <h2>@GetObjectValue(bookDate, "Date")</h2>
+            @foreach (var book in GetObjectValue(bookDate, "Booking"))
+            {
+                <div class="card shadow">
+                    <li>@GetObjectValue(book, "LabName")</li>
+                    <li>@GetObjectValue(book, "Time")</li>
+                    <li>@GetObjectValue(book, "ItemName")</li>
+                </div>
+            }
+        </div>
+    }
 </div>
