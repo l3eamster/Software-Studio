@@ -68,7 +68,7 @@ namespace DonutzStudio.Controllers
             }
             ViewBag.Timelines = timelines;
             ViewBag.Username = HttpContext.Session.GetString("Username");
-            ViewBag.UserId = HttpContext.Session.GetString("UserId");
+            ViewBag.UserId = HttpContext.Session.GetInt32("UserId");
             return View(lab);
         }
 
