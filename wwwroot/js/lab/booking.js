@@ -58,7 +58,7 @@ async function submitHandler(event, labId, username, userId) {
     body: JSON.stringify({ UserId: userId, LabId: labId, BookingList: result }),
   })
   const data = await res.text()
-  if (data === 'Error') alert('Error!')
+  if (data === 'ERROR') alert('ERROR!')
   else {
     alert('OK')
     location.reload()

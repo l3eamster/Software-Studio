@@ -53,5 +53,14 @@ namespace DonutzStudio.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public async Task<string> Cancel(int id)
+        {
+            var booking = await _context.Booking.FindAsync(id);
+            _context.Booking.Remove(booking);
+            await _context.SaveChangesAsync();
+            return "OK";
+        }
     }
 }

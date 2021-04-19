@@ -74,9 +74,9 @@ namespace DonutzStudio.Controllers
 
         // POST: Lab/Booking
         [HttpPost]
-        public async Task<JsonResult> Booking([FromBody] BookingForm form)
+        public async Task<string> Booking([FromBody] BookingForm form)
         {
-            if (!ModelState.IsValid) return Json("Error");
+            if (!ModelState.IsValid) return "ERROR";
 
             foreach (var book in form.BookingList)
             {
@@ -93,7 +93,7 @@ namespace DonutzStudio.Controllers
                 }
             }
             await _context.SaveChangesAsync();
-            return Json("OK");
+            return "OK";
         }
 
         // Utilities
