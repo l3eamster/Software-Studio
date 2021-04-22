@@ -10,4 +10,16 @@ namespace DonutzStudio.Models
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
     }
+    public class LoginForm
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class RegisterForm
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Password2 { get; set; }
+    }
 }

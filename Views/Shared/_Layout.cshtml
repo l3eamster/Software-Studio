@@ -46,11 +46,11 @@
             @if (CheckAuthen())
             {
                 <span class="navbar-account">@Context.Session.GetString("Username")</span>
-                <a class="navbar-btn" asp-controller="User" asp-action="Logout">ออกจากระบบ</a>
+                <a class="navbar-btn" asp-controller="Login" asp-action="Logout">ออกจากระบบ</a>
             }
             else
             {
-                <a class="navbar-btn" asp-controller="User" asp-action="Login">ลงชื่อเข้าใช้</a>
+                <a class="navbar-btn" asp-controller="Login" asp-action="Index">ลงชื่อเข้าใช้</a>
             }
 
         </div>
