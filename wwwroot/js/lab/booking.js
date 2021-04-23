@@ -24,14 +24,8 @@ resetBtn.onclick = () => {
 /**
  * Form handler
  */
-async function submitHandler(event, labId, username, userId) {
+async function submitHandler(event, labId, userId = -1) {
   event.preventDefault()
-
-  if (!username) {
-    alert('ไปล็อคอินก๊อนน')
-    window.location = 'https://localhost:5001/'
-    return
-  }
 
   const result = []
   const timelines = form.querySelectorAll('.timeline-zone')
@@ -57,10 +51,11 @@ async function submitHandler(event, labId, username, userId) {
     },
     body: JSON.stringify({ UserId: userId, LabId: labId, BookingList: result }),
   })
-  const data = await res.text()
-  if (data === 'Error') alert('Error!')
-  else {
-    alert('OK')
-    location.reload()
-  }
+  window.location = res.url
+  // const data = await res.text()
+  // if (data === 'Error') alert('Error!')
+  // else {
+  //   alert('OK')
+  //   location.reload()
+  // }
 }

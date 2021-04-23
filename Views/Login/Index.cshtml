@@ -1,18 +1,21 @@
 @model DonutzStudio.Models.LoginForm
+
 <link rel="stylesheet" href="~/css/loginregis.css" />
+
 <form asp-action="LoginForm">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Username" class="control-label"></label>
-        <input asp-for="Username" class="form-control" />
+        <input asp-for="Username" class="form-control" required />
         <span asp-validation-for="Username" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" class="form-control" />
+        <input asp-for="Password" class="form-control" required />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" value="Login" class="btn btn-primary" />
     </div>
 </form>
+<a asp-controller="Register">ยังไม่มีบัญชี? สร้างบัญชีผู้ใช้งาน</a>

@@ -28,8 +28,11 @@ namespace DonutzStudio.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.SetString("Username", "");
-            HttpContext.Session.SetInt32("UserId", -1);
+            HttpContext.Session.Remove("Username");
+            HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("IsAdmin");
+            HttpContext.Session.Remove("Error");
+            HttpContext.Session.Remove("Success");
             return Redirect("/");
         }
 
@@ -39,16 +42,23 @@ namespace DonutzStudio.Controllers
         {
             var user = _context.User.Where(m => m.Name == form.Username);
 
+            // Verify
             if (user.Count() == 0)
             {
+                HttpContext.Session.SetString("Error", "User not found");
                 return RedirectToAction("Index");
             }
             if (user.First().Password != form.Password)
             {
+                HttpContext.Session.SetString("Error", "Incorrect password");
                 return RedirectToAction("Index");
             }
+
+            // Login
             if (user.First().IsAdmin)
             {
+                HttpContext.Session.Remove("Error");
+                HttpContext.Session.Remove("Success");
                 HttpContext.Session.SetInt32("IsAdmin", 1);
                 HttpContext.Session.SetString("Username", user.First().Name);
                 HttpContext.Session.SetInt32("UserId", user.First().Id);
@@ -56,6 +66,8 @@ namespace DonutzStudio.Controllers
             }
             else
             {
+                HttpContext.Session.Remove("Error");
+                HttpContext.Session.Remove("Success");
                 HttpContext.Session.SetInt32("IsAdmin", 0);
                 HttpContext.Session.SetString("Username", user.First().Name);
                 HttpContext.Session.SetInt32("UserId", user.First().Id);

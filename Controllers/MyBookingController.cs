@@ -61,7 +61,7 @@ namespace DonutzStudio.Controllers
                 });
             }
             ViewBag.Mybooking = group;
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(group));
+            // Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(group));
             return View();
         }
         public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }

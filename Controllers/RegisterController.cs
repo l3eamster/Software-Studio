@@ -26,21 +26,15 @@ namespace DonutzStudio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Username,Password,Password2")] RegisterForm form)
         {
-            if (form.Username.Count() < 4)
-            {
-                return RedirectToAction("Index");
-            }
-            if (form.Password.Count() < 6)
-            {
-                return RedirectToAction("Index");
-            }
             if (form.Password != form.Password2)
             {
+                HttpContext.Session.SetString("Error", "Password and Confirm password mismatch");
                 return RedirectToAction("Index");
             }
             var formOld = _context.User.Where(m => m.Name == form.Username);
             if (formOld.Count() != 0)
             {
+                HttpContext.Session.SetString("Error", "Username already exist");
                 return RedirectToAction("Index");
             }
 
@@ -50,6 +44,8 @@ namespace DonutzStudio.Controllers
             user.IsAdmin = false;
             _context.Add(user);
             await _context.SaveChangesAsync();
+
+            HttpContext.Session.Remove("Error");
             HttpContext.Session.SetString("Username", user.Name);
             HttpContext.Session.SetInt32("UserId", user.Id);
 

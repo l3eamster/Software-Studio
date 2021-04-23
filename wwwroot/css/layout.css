@@ -164,3 +164,55 @@
 .navbar-btn:focus {
   outline: none;
 }
+
+/* Toast styles
+-------------------------------------------------- */
+.my-toast-wrapper {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translate(-50%, -50%);
+  padding: 0 1rem;
+  height: 60px;
+  color: white;
+  border-radius: 0.25rem;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: err-animation forwards 0.5s;
+}
+
+.my-toast-error {
+  background: var(--red500);
+}
+.my-toast-success {
+  background: var(--green500);
+}
+
+.my-toast-icon {
+  font-size: 20px;
+  margin-right: 1rem;
+}
+
+.my-toast-close {
+  font-size: 16px;
+  opacity: 0.5;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.my-toast-close:hover {
+  opacity: 1;
+}
+
+@keyframes err-animation {
+  from {
+    opacity: 0;
+    bottom: -6rem;
+  }
+  to {
+    opacity: 1;
+    bottom: 1rem;
+  }
+}

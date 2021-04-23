@@ -23,10 +23,12 @@ namespace DonutzStudio.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            if(HttpContext.Session.GetInt32("IsAdmin")==0)
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
             {
                 return Redirect("/");
             }
+            HttpContext.Session.Remove("Error");
+            HttpContext.Session.Remove("Success");
             return View(await _context.Lab.ToListAsync());
         }
 
@@ -67,6 +69,13 @@ namespace DonutzStudio.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(lab);
+        }
+
+        public string RemoveAllToast()
+        {
+            HttpContext.Session.Remove("Error");
+            HttpContext.Session.Remove("Success");
+            return "OK";
         }
         private bool labExists(int id)
         {

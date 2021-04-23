@@ -24,10 +24,12 @@ namespace DonutzStudio.Controllers
         // GET: /Lab
         public async Task<IActionResult> Index()
         {
-            if(HttpContext.Session.GetInt32("IsAdmin")==1)
+            if (HttpContext.Session.GetInt32("IsAdmin") == 1)
             {
                 return Redirect("/Admin");
             }
+            HttpContext.Session.Remove("Error");
+            HttpContext.Session.Remove("Success");
             return View(await _context.Lab.ToListAsync());
         }
 
@@ -78,9 +80,13 @@ namespace DonutzStudio.Controllers
 
         // POST: Lab/Booking
         [HttpPost]
-        public async Task<JsonResult> Booking([FromBody] BookingForm form)
+        public async Task<IActionResult> Booking([FromBody] BookingForm form)
         {
-            if (!ModelState.IsValid) return Json("Error");
+            if (form.UserId == -1)
+            {
+                HttpContext.Session.SetString("Error", "กรุณาลงชื่อเข้าใช้");
+                return Redirect("/Login");
+            }
 
             foreach (var book in form.BookingList)
             {
@@ -97,7 +103,8 @@ namespace DonutzStudio.Controllers
                 }
             }
             await _context.SaveChangesAsync();
-            return Json("OK");
+            HttpContext.Session.SetString("Success", "การจองสำเร็จ");
+            return Redirect($"/Lab/Booking/{form.LabId}");
         }
 
         // Utilities
@@ -105,6 +112,8 @@ namespace DonutzStudio.Controllers
         {
             return _context.Booking.Any(m => m.LabId == booking.LabId && m.UserId == booking.UserId && m.Date.Date == booking.Date.Date && m.Time == booking.Time);
         }
+
+        public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
 
 
         //
