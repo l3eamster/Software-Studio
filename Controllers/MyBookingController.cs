@@ -22,6 +22,10 @@ namespace DonutzStudio.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("UserId") == null)
+            {
+                return Redirect("/");
+            }
             var bookings = await _context.Booking.ToListAsync();
             var lab = await _context.Lab.ToListAsync();
 
