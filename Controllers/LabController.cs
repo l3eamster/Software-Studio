@@ -24,6 +24,10 @@ namespace DonutzStudio.Controllers
         // GET: /Lab
         public async Task<IActionResult> Index()
         {
+            if(HttpContext.Session.GetInt32("IsAdmin")==1)
+            {
+                return Redirect("/Admin");
+            }
             return View(await _context.Lab.ToListAsync());
         }
 

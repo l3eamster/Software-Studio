@@ -1,0 +1,71 @@
+@model DonutzStudio.Models.Lab
+
+
+@{
+    ViewData["Title"] = @Model.Name;
+    string[] Times = { "ช่วงเช้า", "ช่วงบ่าย", "ช่วงค่ำ" };
+}
+
+@functions
+{
+    public dynamic GetObjectValue(object o, string propertyName)
+    {
+        return o.GetType().GetProperty(propertyName).GetValue(o, null);
+    }
+
+    public bool CheckAvailable(object date, int i)
+    {
+        return
+        GetObjectValue(date, "Time" + i.ToString()) > 0 &&
+        DateTime.Compare(DateTime.Now, GetObjectValue(date, "Date").Date.AddHours(9 + i * 4)) < 0;
+    }
+
+    public bool CheckDisabled(object date, int i)
+    {
+        return
+        GetObjectValue(date, "Selected" + i.ToString()) ||
+        !CheckAvailable(date, i);
+    }
+
+    public string CheckSelectedTime(object o, int i)
+    {
+        return GetObjectValue(o, "Selected" + i.ToString()) ? "timeline-selected" : "";
+    }
+}
+
+<link rel="stylesheet" href="~/css/lab/booking.css" />
+<script defer src="~/js/lab/booking.js"></script>
+
+<div>
+    <h1>
+        <a class="back-btn" asp-controller="Lab" asp-action="Index">ห้องปฏิบัติการ</a>
+        <span class="slash"> / </span>
+        @Model.Name
+    </h1>
+    <div class="container">
+        <img class="lab-img" />
+        <form asp-action="Edit" class="booking-zone shadow-lg">
+        <h3>เลือกช่วงเวลาที่จะใช้งาน</h3>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemName" class="control-label"></label>
+                <input asp-for="ItemName" class="form-control" />
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemCount" class="control-label"></label>
+                <input asp-for="ItemCount" class="form-control" />
+                <span asp-validation-for="ItemCount" class="text-danger"></span>
+            </div>
+            <div class="footer">
+                <button class="btn">ยืนยันการแก้ไข</button>
+            </div>
+        </form>
+
+    </div>
+</div>

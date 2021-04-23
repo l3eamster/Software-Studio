@@ -47,11 +47,21 @@ namespace DonutzStudio.Controllers
             {
                 return RedirectToAction("Index");
             }
+            if (user.First().IsAdmin)
+            {
+                HttpContext.Session.SetInt32("IsAdmin", 1);
+                HttpContext.Session.SetString("Username", user.First().Name);
+                HttpContext.Session.SetInt32("UserId", user.First().Id);
+                return Redirect("/Admin");
+            }
+            else
+            {
+                HttpContext.Session.SetInt32("IsAdmin", 0);
+                HttpContext.Session.SetString("Username", user.First().Name);
+                HttpContext.Session.SetInt32("UserId", user.First().Id);
+                return Redirect("/");
+            }
 
-            HttpContext.Session.SetString("Username", user.First().Name);
-            HttpContext.Session.SetInt32("UserId", user.First().Id);
-
-            return Redirect("/");
         }
     }
 }

@@ -1,0 +1,22 @@
+@model IEnumerable<DonutzStudio.Models.Lab>
+
+@{
+    ViewData["Title"] = "ห้องปฏิบัติการ";
+}
+
+<link rel="stylesheet" href="~/css/lab/index.css" />
+
+<div>
+    <h1>ห้องปฏิบัติการ</h1>
+    <div class="wrapper">
+        @foreach (var Lab in Model)
+        {
+            <a asp-action="Edit" asp-route-id="@Lab.Id">
+                <div class="lab-card shadow">
+                    <img class="lab-img" style="background:deepskyblue" />
+                    <div class="lab-name">@Lab.Name</div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
