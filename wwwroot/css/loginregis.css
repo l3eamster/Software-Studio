@@ -1,5 +1,37 @@
 .box {
-  width: 400px;
-  height: 500px;
+  width: 560px;
+  height: 480px;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   background: white;
+  padding: 2rem 4rem;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-h {
+  height: 580px;
+}
+
+.my {
+  margin: 1rem 0;
+}
+
+.link {
+  color: var(--main500);
+}
+
+.link:hover {
+  text-decoration: underline;
 }
