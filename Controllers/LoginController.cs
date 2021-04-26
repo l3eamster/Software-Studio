@@ -45,17 +45,17 @@ namespace DonutzStudio.Controllers
             // Verify
             if (user.Count() == 0)
             {
-                HttpContext.Session.SetString("Error", "User not found");
+                HttpContext.Session.SetString("Error", "ไม่พบบัญชีผู้ใช้");
                 return RedirectToAction("Index");
             }
             if (user.First().IsBan)
             {
-                HttpContext.Session.SetString("Error", "You have been banned");
+                HttpContext.Session.SetString("Error", "บัญชีนี้ถูกระงับการใช้งาน");
                 return RedirectToAction("Index");
             }
             if (user.First().Password != form.Password)
             {
-                HttpContext.Session.SetString("Error", "Incorrect password");
+                HttpContext.Session.SetString("Error", "รหัสผ่านไม่ถูกต้อง");
                 return RedirectToAction("Index");
             }
 

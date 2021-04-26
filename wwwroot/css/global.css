@@ -6,7 +6,9 @@ for details on configuring this project to bundle and minify static web assets. 
 /* Global styles
 -------------------------------------------------- */
 :root {
+  --gray800a: #1f293780;
   --gray800: #1e293b;
+  --gray500: #6b7280;
   --gray400: #9ca3af;
   --gray300: #d1d5db;
   --gray200: #e5e7eb;

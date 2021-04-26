@@ -21,18 +21,22 @@ namespace DonutzStudio.Controllers
         {
             _context = context;
         }
+
+        // GET: /Account
         public async Task<IActionResult> Index()
         {
             if (HttpContext.Session.GetInt32("IsAdmin") != 1)
             {
                 return Redirect("/");
             }
-            HttpContext.Session.Remove("Error");
-            HttpContext.Session.Remove("Success");
 
-            return View(await _context.User.ToListAsync());
+            var userList = await _context.User.ToListAsync();
+            userList.Reverse();
+
+            return View(userList);
         }
 
+        // POST: /Account/Ban/[id]
         [HttpPost]
         public async Task<IActionResult> Ban(int id)
         {
@@ -42,6 +46,21 @@ namespace DonutzStudio.Controllers
             user.IsBan = !user.IsBan;
             _context.Update(user);
             await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // POST: /Account/Delete/[id]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _context.User.FindAsync(id);
+            if (user == null) return NotFound();
+
+            _context.Remove(user);
+            await _context.SaveChangesAsync();
+
+            HttpContext.Session.SetString("Success", "ลบบัญชีสำเร็จ");
 
             return RedirectToAction(nameof(Index));
         }

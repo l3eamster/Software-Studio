@@ -71,6 +71,7 @@
 /* Navbar styles
 -------------------------------------------------- */
 .navbar {
+  z-index: 10;
   position: fixed;
   top: 0;
   width: 100%;

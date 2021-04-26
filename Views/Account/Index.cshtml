@@ -5,6 +5,7 @@
 }
 
 <link rel="stylesheet" href="~/css/account.css" />
+<script defer src="~/js/account.js"></script>
 
 <h1>จัดการบัญชีผู้ใช้</h1>
 @foreach (var User in Model)
@@ -44,7 +45,22 @@
                 }
 
             </form>
-            <button class="btn-sm ghost"><i class="fas fa-trash-alt icon"></i>ลบบัญชี</button>
+            <button class="btn-sm ghost" onclick="openPopup(@User.Id)"><i class="fas fa-trash-alt icon"></i>ลบบัญชี</button>
+
+            <div class="overlay" id="@String.Format("popup{0}", User.Id)">
+                <div class="popup">
+                    <i class="fas fa-exclamation-triangle big-icon"></i>
+                    <h2>คำเตือน</h2>
+                    <p>บัญชีนี้จะหายไปอย่างถาวร</p>
+                    <div class="botton-group">
+                        <button class="popup-btn" onclick="closePopup(@User.Id)">ยกเลิก</button>
+                        <form asp-action="Delete" asp-route-id="@User.Id">
+                            <button class="popup-btn popup-btn-main">ยืนยัน</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         }
 
     </div>
