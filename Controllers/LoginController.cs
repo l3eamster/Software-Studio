@@ -38,7 +38,7 @@ namespace DonutzStudio.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> LoginForm([Bind("Username, Password")] LoginForm form)
+        public IActionResult LoginForm([Bind("Username, Password")] LoginForm form)
         {
             var user = _context.User.Where(m => m.Name == form.Username);
 
