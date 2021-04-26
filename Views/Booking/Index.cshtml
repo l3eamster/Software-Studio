@@ -1,54 +1,46 @@
-@* ========== THIS FILE IS FOR DEBUGING ========== *@
-
-@model IEnumerable<DonutzStudio.Models.Booking>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "การจองของฉัน";
+}
+@functions
+{
+    public dynamic GetObjectValue(object o, string propertyName)
+    {
+        return o.GetType().GetProperty(propertyName).GetValue(o,
+        null);
+    }
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/mybooking.css" />
+<script defer src="~/js/booking.js"></script>
+<div>
+    <h1>การจองของฉัน</h1>
+    @foreach (var bookDate in ViewBag.Mybooking)
+    {
+        <div>
+            <h2>@GetObjectValue(bookDate, "Date")</h2>
+            @foreach (var book in GetObjectValue(bookDate, "Booking"))
+            {
+                <div class="card shadow">
+                    <li>@GetObjectValue(book, "LabName")</li>
+                    <li>@GetObjectValue(book, "Time")</li>
+                    <li>@GetObjectValue(book, "ItemName")</li>
+                    <li>@GetObjectValue(book , "Username")</li>
+                    <a>ระงับบัญชีชั่วคราว</a>
+                    <button onclick="open_popup(@GetObjectValue(book,"BookingID"))">ยกเลิกการจอง</button>
+                </div>
+                <div class="overlay" id="@String.Format("popup{0}",GetObjectValue(book,"BookingID"))">
+                    <div class="popup">
+                        คุณแน่ในหรือไม่ที่จะยกเลิกการจอง?
+                        <div class="confirm_to_delete">
+                            <button onclick="close_popup(@GetObjectValue(book,"BookingID"))">ไม่ทำ</button>
+                            <form asp-action="Delete" asp-route-id="@GetObjectValue(book,"BookingID")">
+                                <input type="submit" value="แน่ใจ" class="btn btn-danger" />
+                            </form>
+                        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LabId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LabId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Time)
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
