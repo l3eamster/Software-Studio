@@ -42,7 +42,8 @@
         @Model.Name
     </h1>
     <div class="container">
-        <img class="lab-img" />
+        <img class="lab-img" src="@Model.LabImage" />
+        <img class="item-img" src="@Model.ItemImage" />
         <form class="booking-zone shadow-lg" id="form" onsubmit="(() => submitHandler(event, @Model.Id, 
              @ViewBag.UserId))(event)">
             <h3 class="h3">เลือกช่วงเวลาที่จะใช้งาน</h3>

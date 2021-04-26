@@ -9,5 +9,8 @@ namespace DonutzStudio.Models
         public string Name { get; set; }
         public string ItemName { get; set; }
         public int ItemCount { get; set; }
+        public string Color { get; set; }
+        public string ItemImage { get; set; }
+        public string LabImage { get; set; }
     }
 }

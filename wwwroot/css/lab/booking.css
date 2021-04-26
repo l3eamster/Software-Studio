@@ -17,19 +17,26 @@
   width: 100%;
   height: 720px;
   position: relative;
-  background: lightskyblue;
+  background: attr(data-img);
   border-radius: 10px;
+  overflow: hidden;
 }
 
-.lab-img {
+.item-img {
   width: 325px;
   height: 195px;
   top: 50%;
   left: 10%;
   transform: translateY(-50%);
   position: absolute;
-  background: lightskyblue;
-  border-radius: 10px;
+}
+
+.lab-img {
+  position: absolute;
+  opacity: 0.5;
+  object-fit: cover;
+  object-position: center center;
+  width: 100%;
 }
 
 .booking-zone {

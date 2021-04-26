@@ -128,7 +128,7 @@ namespace DonutzStudio.Controllers
         // POST: Lab/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ItemName,ItemCount")] Lab lab)
+        public async Task<IActionResult> Create([Bind("Id,Name,ItemName,ItemCount,ItemImage,Color")] Lab lab)
         {
             if (ModelState.IsValid)
             {

@@ -13,7 +13,7 @@
         {
             <a asp-action="Booking" asp-route-id="@Lab.Id">
                 <div class="lab-card shadow">
-                    <img class="lab-img" style="background:deepskyblue" />
+                    <img class="lab-img" src="@Lab.LabImage" style="@String.Format("background:{0};", Lab.Color)" />
                     <div class="lab-name">@Lab.Name</div>
                 </div>
             </a>
