@@ -42,6 +42,7 @@ namespace DonutzStudio.Controllers
             user.Name = form.Username;
             user.Password = form.Password;
             user.IsAdmin = false;
+            user.Created = DateTime.Now;
             _context.Add(user);
             await _context.SaveChangesAsync();
 

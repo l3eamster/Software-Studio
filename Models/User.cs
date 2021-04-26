@@ -10,6 +10,9 @@ namespace DonutzStudio.Models
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsBan { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Created { get; set; }
     }
     public class LoginForm
     {

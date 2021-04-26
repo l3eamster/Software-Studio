@@ -1,0 +1,92 @@
+.card {
+  width: 100%;
+  margin: 0 auto;
+  height: 70px;
+  border-radius: 5px;
+  background: #ffff;
+  margin-bottom: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  min-width: 220px;
+}
+
+.date {
+  min-width: 290px;
+}
+
+.label {
+  color: var(--gray400);
+  margin-right: 1rem;
+}
+
+#admin-icon {
+  color: var(--yellow400);
+  margin-right: 0.25rem;
+}
+
+#ban-icon {
+  color: var(--red500);
+  margin-right: 0.25rem;
+}
+
+.ml-auto {
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.btn-sm {
+  background: var(--red500);
+  height: 36px;
+  border: none;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  border-radius: 0.5rem;
+  transition: 0.2s;
+}
+
+.btn-sm:hover {
+  background: var(--red600);
+}
+
+.btn-outline {
+  border: 1px solid var(--red500);
+  background: white;
+  color: var(--red500);
+}
+.btn-outline:hover {
+  background: var(--red100);
+}
+
+.icon {
+  margin-right: 0.5rem;
+}
+
+.ghost {
+  background: var(--gray100);
+  color: var(--red500);
+  transition: 0.2s;
+}
+
+.ghost:hover {
+  background: var(--gray200);
+}
+
+.is-normal {
+  color: var(--green500);
+}
+
+.is-ban {
+  color: var(--red500);
+}
+
+.footer {
+  height: 4rem;
+}

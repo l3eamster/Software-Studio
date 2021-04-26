@@ -48,6 +48,11 @@ namespace DonutzStudio.Controllers
                 HttpContext.Session.SetString("Error", "User not found");
                 return RedirectToAction("Index");
             }
+            if (user.First().IsBan)
+            {
+                HttpContext.Session.SetString("Error", "You have been banned");
+                return RedirectToAction("Index");
+            }
             if (user.First().Password != form.Password)
             {
                 HttpContext.Session.SetString("Error", "Incorrect password");

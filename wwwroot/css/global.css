@@ -12,9 +12,13 @@ for details on configuring this project to bundle and minify static web assets. 
   --gray200: #e5e7eb;
   --gray100: #f3f4f6;
 
+  --red600: #dc2626;
   --red500: #ef4444;
+  --red100: #fee2e2;
 
   --green500: #10b981;
+
+  --yellow400: #fbbf24;
 
   --main600: #2563eb;
   --main500: #3b82f6;

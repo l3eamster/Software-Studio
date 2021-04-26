@@ -1,0 +1,52 @@
+@model IEnumerable<DonutzStudio.Models.User>
+
+@{
+    ViewData["Title"] = "จัดการบัญชีผู้ใช้";
+}
+
+<link rel="stylesheet" href="~/css/account.css" />
+
+<h1>จัดการบัญชีผู้ใช้</h1>
+@foreach (var User in Model)
+{
+    <div class="card shadow">
+        <span class="name">
+            <label class="label">ชื่อบัญชี</label>
+            @if (User.IsAdmin)
+            {
+                <i class="fas fa-crown" id="admin-icon"></i>
+            }
+            @if (User.IsBan)
+            {
+                <i class="fas fa-ban" id="ban-icon"></i>
+            }
+            @User.Name
+        </span>
+        <span class="date">
+            <label class="label">สร้างบัญชีเมื่อ</label>
+            @String.Format("{0:d MMM, yyyy HH:mm}", User.Created)
+        </span>
+
+        @if (!User.IsAdmin)
+        {
+            <form class="ml-auto" asp-action="Ban" asp-route-id="@User.Id">
+                @if (User.IsBan)
+                {
+                    <button class="btn-sm btn-outline"><i class="fas fa-ban icon"></i>
+                        ยกเลิกระงับ
+                    </button>
+                }
+                else
+                {
+                    <button class="btn-sm"><i class="fas fa-ban icon"></i>
+                        ระงับชั่วคราว
+                    </button>
+                }
+
+            </form>
+            <button class="btn-sm ghost"><i class="fas fa-trash-alt icon"></i>ลบบัญชี</button>
+        }
+
+    </div>
+}
+<footer class="footer"></footer>
