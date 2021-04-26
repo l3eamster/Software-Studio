@@ -65,7 +65,8 @@
                             @for (var i = 0; i < Times.Count(); i++)
                             {
                                 <div class="timeline @CheckSelectedTime(Date, i)">
-                                    <span class="w-60 check-zone"><input type="checkbox" onchange="toggleCheckbox(event)"
+                                    <span class="w-60 check-zone">
+                                        <input type="checkbox" class="input-checkbox" onchange="toggleCheckbox(event)"
                                     checked="@GetObjectValue(Date, "Selected" + i.ToString())"
                                     disabled="@CheckDisabled(Date, i)" /></span>
                                     <span class="w-80">@Times.ElementAt(i)</span>
