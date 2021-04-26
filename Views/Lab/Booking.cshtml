@@ -45,7 +45,13 @@
         <img class="lab-img" />
         <form class="booking-zone shadow-lg" id="form" onsubmit="(() => submitHandler(event, @Model.Id, 
              @ViewBag.UserId))(event)">
-            <h3>เลือกช่วงเวลาที่จะใช้งาน</h3>
+            <h3 class="h3">เลือกช่วงเวลาที่จะใช้งาน</h3>
+            <div class="time-detail">
+                <span>ช่วงเช้า 09:00 - 12:00</span>
+                <span>ช่วงบ่าย 13:00 - 16:00</span>
+                <span>ช่วงค่ำ 17:00 - 19:00</span>
+            </div>
+
             <div class="date-zone">
                 @foreach (var Date in ViewBag.Timelines)
                 {
@@ -76,7 +82,7 @@
                 }
             </div>
             <div class="footer">
-                <button class="btn-gray" type="button" id="reset-btn">รีเซ็ตการเลือก</button>
+                <button class="btn btn-gray" type="button" id="reset-btn">รีเซ็ตการเลือก</button>
                 <span style="width: 10px;"></span>
                 <button class="btn">ยืนยันการจอง</button>
             </div>

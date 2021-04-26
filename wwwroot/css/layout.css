@@ -49,23 +49,28 @@
 }
 
 .btn-gray {
-  width: 100%;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
+  color: inherit;
   background: var(--gray100);
-  border-radius: 6px;
-  transition: 0.2s;
 }
 
 .btn-gray:hover {
   background: var(--gray200);
 }
 
-.btn-gray:focus {
-  outline: none;
+.btn-neg {
+  width: auto;
+  height: 36px;
+  border: none;
+  padding: 0 1rem;
+  color: white;
+  border-radius: 0.5rem;
+  transition: 0.2s;
+  background: var(--gray100);
+  color: var(--red500);
+}
+
+.btn-neg:hover {
+  background: var(--gray200);
 }
 
 /* Input styles
