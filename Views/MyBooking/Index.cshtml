@@ -11,6 +11,7 @@
 }
 
 <link rel="stylesheet" href="~/css/mybooking.css" />
+<script defer src="~/js/mybooking.js"></script>
 
 <div>
     <h1>การจองของฉัน</h1>
@@ -21,9 +22,22 @@
             @foreach (var book in GetObjectValue(bookDate, "Booking"))
             {
                 <div class="card shadow">
-                    <li>@GetObjectValue(book, "LabName")</li>
-                    <li>@GetObjectValue(book, "Time")</li>
-                    <li>@GetObjectValue(book, "ItemName")</li>
+                    <div class="details">
+                        <div class="wrapper">
+                            <div class="topic">ห้อง</div>
+                            <div>@GetObjectValue(book, "LabName")</div>
+                        </div>
+                        <div class="wrapper">
+                            <div class="topic">ช่วงเวลา</div>
+                            <div>@GetObjectValue(book, "Time")</div>
+                        </div>
+                        <div class="wrapper">
+                            <div class="topic">อุปกรณ์</div>
+                            <div>@GetObjectValue(book, "ItemName")</div>
+                        </div>
+                    </div>
+
+                    <button class="cancel-btn" onclick="cancel(@GetObjectValue(book, "BookingID"))">ยกเลิกการจอง</button>
                 </div>
             }
         </div>

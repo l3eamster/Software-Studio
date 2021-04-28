@@ -80,6 +80,7 @@ namespace DonutzStudio.Controllers
 
         // POST: Lab/Booking
         [HttpPost]
+<<<<<<< HEAD
         public async Task<IActionResult> Booking([FromBody] BookingForm form)
         {
             if (form.UserId == -1)
@@ -87,6 +88,11 @@ namespace DonutzStudio.Controllers
                 HttpContext.Session.SetString("Error", "กรุณาลงชื่อเข้าใช้");
                 return Redirect("/Login");
             }
+=======
+        public async Task<string> Booking([FromBody] BookingForm form)
+        {
+            if (!ModelState.IsValid) return "ERROR";
+>>>>>>> 35f4c73a98672c427495be69179027bc88900387
 
             foreach (var book in form.BookingList)
             {
@@ -103,8 +109,12 @@ namespace DonutzStudio.Controllers
                 }
             }
             await _context.SaveChangesAsync();
+<<<<<<< HEAD
             HttpContext.Session.SetString("Success", "การจองสำเร็จ");
             return Redirect($"/Lab/Booking/{form.LabId}");
+=======
+            return "OK";
+>>>>>>> 35f4c73a98672c427495be69179027bc88900387
         }
 
         // Utilities

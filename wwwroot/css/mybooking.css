@@ -7,6 +7,44 @@
   padding: 20px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.details {
+  width: 600px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cancel-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  color: var(--red500);
+  background: var(--gray100);
+  border: none;
+  border-radius: 8px;
+  padding: 0 1rem;
+  transition: 0.2s;
+}
+
+.cancel-btn:hover {
+  background: var(--gray200);
+}
+
+.topic {
+  color: var(--gray400);
+  margin-right: 20px;
+}
+
+.wrapper {
+  width: 200px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
 }
 
 /*popup*/

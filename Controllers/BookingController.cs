@@ -89,7 +89,19 @@ namespace DonutzStudio.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+<<<<<<< HEAD
         public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
+=======
+
+        [HttpPost]
+        public async Task<string> Cancel(int id)
+        {
+            var booking = await _context.Booking.FindAsync(id);
+            _context.Booking.Remove(booking);
+            await _context.SaveChangesAsync();
+            return "OK";
+        }
+>>>>>>> 35f4c73a98672c427495be69179027bc88900387
     }
 
 }
