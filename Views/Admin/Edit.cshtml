@@ -43,25 +43,44 @@
         @Model.Name
     </h1>
     <div class="container">
-        <img class="lab-img" src="https://pngimg.com/uploads/ruler/ruler_PNG65.png" />
+        <img class="lab-img" src="@Model.LabImage" />
+        <img class="item-img" src="@Model.ItemImage" />
         <form asp-action="Edit" class="booking-zone shadow-lg">
-        <h3>ชื่อห้อง</h3>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+            <h3>ชื่อห้อง</h3>
+            <div class="overflow">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ItemName" class="control-label"></label>
+                    <input asp-for="ItemName" class="form-control" />
+                    <span asp-validation-for="ItemName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ItemCount" class="control-label"></label>
+                    <input asp-for="ItemCount" class="form-control" />
+                    <span asp-validation-for="ItemCount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LabImage" class="control-label"></label>
+                    <input asp-for="LabImage" class="form-control" />
+                    <span asp-validation-for="LabImage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ItemImage" class="control-label"></label>
+                    <input asp-for="ItemImage" class="form-control" />
+                    <span asp-validation-for="ItemImage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Color" class="control-label"></label>
+                    <input asp-for="Color" class="form-control" type="color" />
+                    <span asp-validation-for="Color" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ItemName" class="control-label"></label>
-                <input asp-for="ItemName" class="form-control" />
-                <span asp-validation-for="ItemName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItemCount" class="control-label"></label>
-                <input asp-for="ItemCount" class="form-control" />
-                <span asp-validation-for="ItemCount" class="text-danger"></span>
-            </div>
+
             <div class="footer">
                 <button class="btn">บันทึกการเปลี่ยนแปลง</button>
             </div>

@@ -34,6 +34,11 @@ namespace DonutzStudio.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
+            {
+                return Redirect("/");
+            }
+
             var lab = await _context.Lab.FindAsync(id);
             if (lab == null) return NotFound();
 
@@ -41,8 +46,13 @@ namespace DonutzStudio.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ItemName,ItemCount")] Lab lab)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ItemName,ItemCount,ItemImage,LabImage,Color")] Lab lab)
         {
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
+            {
+                return Redirect("/");
+            }
+
             if (id != lab.Id)
             {
                 return NotFound();

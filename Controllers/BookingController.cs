@@ -24,10 +24,11 @@ namespace DonutzStudio.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (HttpContext.Session.GetString("UserId") == null)
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
             {
                 return Redirect("/");
             }
+
             var bookings = await _context.Booking.ToListAsync();
             var lab = await _context.Lab.ToListAsync();
 
@@ -38,6 +39,7 @@ namespace DonutzStudio.Controllers
             List<dynamic> memDate = new List<dynamic>();
 
             List<dynamic> myBooking = new List<dynamic>();
+
             foreach (var booking in bookings)
             {
                 var repeatCount = memDate.FindAll(date => date == booking.Date.Date).Count();
@@ -77,6 +79,11 @@ namespace DonutzStudio.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
+            {
+                return Redirect("/");
+            }
+
             var movie = await _context.Booking.FindAsync(id);
             _context.Booking.Remove(movie);
             await _context.SaveChangesAsync();
