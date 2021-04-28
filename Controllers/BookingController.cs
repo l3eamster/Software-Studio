@@ -92,12 +92,17 @@ namespace DonutzStudio.Controllers
         public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
 
         [HttpPost]
-        public async Task<string> Cancel(int id)
+        public async Task<IActionResult> Cancel(int id)
         {
             var booking = await _context.Booking.FindAsync(id);
             _context.Booking.Remove(booking);
             await _context.SaveChangesAsync();
-            return "OK";
+            HttpContext.Session.SetString("Success", "ยกเลิกการจองสำเร็จ");
+            if (HttpContext.Session.GetInt32("IsAdmin") == 1)
+            {
+                return Redirect("/Booking");
+            }
+            return Redirect("/MyBooking");
         }
     }
 

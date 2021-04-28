@@ -49,7 +49,7 @@ namespace DonutzStudio.Controllers
             // Verify
             if (user.Count() == 0)
             {
-                HttpContext.Session.SetString("Error", "ไม่พบบัญชีผู้ใช้");
+                HttpContext.Session.SetString("Error", "ชื่อบัญชีหรือรหัสผ่านไม่ถูกต้อง");
                 return RedirectToAction("Index");
             }
             if (user.First().IsBan)
@@ -59,7 +59,7 @@ namespace DonutzStudio.Controllers
             }
             if (user.First().Password != form.Password)
             {
-                HttpContext.Session.SetString("Error", "รหัสผ่านไม่ถูกต้อง");
+                HttpContext.Session.SetString("Error", "ชื่อบัญชีหรือรหัสผ่านไม่ถูกต้อง");
                 return RedirectToAction("Index");
             }
 

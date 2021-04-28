@@ -22,3 +22,17 @@ function enableWindowScroll() {
   winX = null
   winY = null
 }
+
+function openLogoutPopup() {
+  const popup = document.querySelector('#popupLogout')
+  popup.style.opacity = 1
+  popup.style.pointerEvents = 'all'
+  disableWindowScroll()
+}
+
+function closeLogoutPopup() {
+  const popup = document.querySelector('#popupLogout')
+  popup.style.opacity = 0
+  popup.style.pointerEvents = 'none'
+  enableWindowScroll()
+}

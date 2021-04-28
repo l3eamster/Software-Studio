@@ -18,7 +18,7 @@
     @foreach (var bookDate in ViewBag.Mybooking)
     {
         <div>
-            <h2>@GetObjectValue(bookDate, "Date")</h2>
+            <h2>@String.Format("{0:d MMMM, yyyy}", GetObjectValue(bookDate, "Date"))</h2>
             @foreach (var book in GetObjectValue(bookDate, "Booking"))
             {
                 <div class="card shadow">
@@ -37,9 +37,27 @@
                         </div>
                     </div>
 
-                    <button class="cancel-btn" onclick="cancel(@GetObjectValue(book, "BookingID"))">ยกเลิกการจอง</button>
+                    <button class="cancel-btn" onclick="openPopup(@GetObjectValue(book, "BookingID"))">
+                        ยกเลิกการจอง</button>
+                    <div class="overlay" id="@String.Format("popup{0}", GetObjectValue(book, "BookingID"))">
+                        <div class="popup">
+                            <i class="fas fa-exclamation-triangle big-icon"></i>
+                            <h2>คำเตือน</h2>
+                            <p>การยกเลิกจะไม่สามารถย้อนกลับได้</p>
+                            <div class="botton-group">
+                                <button class="popup-btn"
+                            onclick="closePopup(@GetObjectValue(book, "BookingID"))">ยกเลิก</button>
+                                <form asp-controller="Booking" asp-action="Cancel"
+                            asp-route-id="@GetObjectValue(book, "BookingID")">
+                                    <button class="popup-btn popup-btn-main">ยืนยัน</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
     }
 </div>
+<footer class="footer-space"></footer>

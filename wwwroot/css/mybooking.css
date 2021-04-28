@@ -6,16 +6,17 @@
   margin-bottom: 10px;
   padding: 20px;
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
 }
 
 .details {
-  width: 600px;
+  /* width: 600px; */
   height: 40px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .cancel-btn {
@@ -41,36 +42,8 @@
 }
 
 .wrapper {
-  width: 200px;
-  height: 40px;
+  width: 180px;
   display: flex;
-  flex-direction: row;
-}
-
-/*popup*/
-
-.overlay {
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  opacity: 0;
-  pointer-events: none;
-  justify-content: center;
   align-items: center;
-}
-
-.popup {
-  width: 400px;
-  height: 400px;
-  background: white;
-  padding: 1rem;
-}
-
-.confirm_to_delete {
-  display:flex;
-  width: 100%;
+  flex-direction: row;
 }

@@ -22,11 +22,17 @@ namespace DonutzStudio.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            if (HttpContext.Session.GetString("UserId") == null)
+            if (HttpContext.Session.GetInt32("UserId") == null)
             {
                 return Redirect("/");
             }
-            var bookings = await _context.Booking.ToListAsync();
+            if (HttpContext.Session.GetInt32("IsAdmin") == 1)
+            {
+                return Redirect("/");
+            }
+            var myId = HttpContext.Session.GetInt32("UserId");
+            var bookings = await _context.Booking.Where(m => m.UserId == myId).ToListAsync();
+            bookings = bookings.FindAll(m => CheckAvailable(m.Date, m.Time));
             var lab = await _context.Lab.ToListAsync();
 
             string[] TimeSlot = {
@@ -69,5 +75,11 @@ namespace DonutzStudio.Controllers
             return View();
         }
         public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
+
+        public bool CheckAvailable(DateTime date, int time)
+        {
+            return DateTime.Compare(DateTime.Now.Date, date.Date) <= 0 &&
+            DateTime.Compare(DateTime.Now, date.Date.AddHours(9 + time * 4)) < 0;
+        }
     }
 }

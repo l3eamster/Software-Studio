@@ -44,7 +44,7 @@
         <span class="slash"> / </span>
         @Model.Name
     </h1>
-    <div class="container" style="@String.Format("border-color:{0};", Model.Color)">
+    <div class="container" style="@String.Format("border-color:{0};background:{0};", Model.Color)">
         <img class="lab-img" src="@Model.LabImage" />
         <img class="item-img" src="@Model.ItemImage" />
         <form asp-action="Edit" class="booking-zone shadow-lg">

@@ -17,7 +17,6 @@
   width: 100%;
   height: 720px;
   position: relative;
-  background: attr(data-img);
   border-radius: 10px;
   border-top: 8px solid;
   overflow: hidden;
@@ -39,7 +38,6 @@
 
 .lab-img {
   position: absolute;
-  opacity: 0.5;
   object-fit: cover;
   object-position: center center;
   width: 100%;

@@ -36,6 +36,10 @@ namespace DonutzStudio.Controllers
         // GET: /Lab/Booking/[Id]
         public async Task<IActionResult> Booking(int? id)
         {
+            if (HttpContext.Session.GetInt32("IsAdmin") == 1)
+            {
+                return Redirect("/");
+            }
             var userId = HttpContext.Session.GetInt32("UserId");
             var lab = await _context.Lab.FindAsync(id);
             if (lab == null) return NotFound();
@@ -119,9 +123,11 @@ namespace DonutzStudio.Controllers
         //
         // ===== FOR DEVELOPMENT =====
         //
-        // GET: /Lab/Create
-        public IActionResult Create()
+        // GET: /Lab/DangerouslyCreateLab
+        public IActionResult DangerouslyCreateLab()
         {
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
+                return Redirect("/");
             return View();
         }
 
@@ -130,6 +136,9 @@ namespace DonutzStudio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,ItemName,ItemCount,ItemImage,Color")] Lab lab)
         {
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
+                return Redirect("/");
+
             if (ModelState.IsValid)
             {
                 _context.Add(lab);
@@ -137,6 +146,39 @@ namespace DonutzStudio.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(lab);
+        }
+
+        // GET: /Lab/DangerouslyCreateLab/[Id]
+        public async Task<IActionResult> DangerouslyDeleteLab(int id)
+        {
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
+                return Redirect("/");
+            var lab = await _context.Lab.FindAsync(id);
+            if (lab == null) return Redirect("/");
+            return View(lab);
+        }
+
+        // POST: Lab/Delete/[Id]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
+            {
+                return Redirect("/");
+            }
+
+            var lab = await _context.Lab.FindAsync(id);
+            if (lab == null) return NotFound();
+
+            var labBookingList = _context.Booking.Where(m => m.LabId == lab.Id);
+            foreach (var booking in labBookingList)
+            {
+                _context.Remove(booking);
+            }
+            _context.Remove(lab);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

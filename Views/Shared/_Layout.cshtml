@@ -75,8 +75,13 @@
                 </ul>
                 @if (CheckAuthen())
                 {
-                    <span class="navbar-account">@Context.Session.GetString("Username")</span>
-                    <a class="navbar-btn" asp-controller="Login" asp-action="Logout">ออกจากระบบ</a>
+                    <span class="navbar-account">
+                        @if (Context.Session.GetInt32("IsAdmin") == 1)
+                        {
+                            <i class="fas fa-crown" id="admin-icon"></i>
+                        }
+                        @Context.Session.GetString("Username")</span>
+                    <a class="navbar-btn" style="cursor: pointer;" onclick="openLogoutPopup()">ออกจากระบบ</a>
                 }
                 else
                 {
@@ -108,6 +113,19 @@
             <i class="fas fa-times my-toast-close" onclick="dismissToast()"></i>
         </div>
     }
+
+    <div class="overlay" id="popupLogout">
+        <div class="popup">
+            <i class="fas fa-exclamation-triangle big-icon"></i>
+            <h2>คำเตือน</h2>
+            <p>ยืนยันการจะลงชื่อออกจากบัญชี</p>
+            <div class="botton-group">
+                <button class="popup-btn" onclick="closeLogoutPopup()">ยกเลิก</button>
+                <a asp-controller="Login" asp-action="Logout">
+                    <button class="popup-btn popup-btn-main">ยืนยัน</button></a>
+            </div>
+        </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@

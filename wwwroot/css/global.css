@@ -57,3 +57,8 @@ button {
   font-size: inherit;
   cursor: pointer;
 }
+
+#admin-icon {
+  color: var(--yellow400);
+  margin-right: 0.25rem;
+}

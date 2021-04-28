@@ -11,36 +11,57 @@
 }
 
 <link rel="stylesheet" href="~/css/mybooking.css" />
-<script defer src="~/js/booking.js"></script>
+<script defer src="~/js/mybooking.js"></script>
+
 <div>
     <h1>การจองทั้งหมด</h1>
     @foreach (var bookDate in ViewBag.Mybooking)
     {
         <div>
-            <h2>@GetObjectValue(bookDate, "Date")</h2>
+            <h2>@String.Format("{0:d MMMM, yyyy}", GetObjectValue(bookDate, "Date"))</h2>
             @foreach (var book in GetObjectValue(bookDate, "Booking"))
             {
                 <div class="card shadow">
-                    <li>@GetObjectValue(book, "LabName")</li>
-                    <li>@GetObjectValue(book, "Time")</li>
-                    <li>@GetObjectValue(book, "ItemName")</li>
-                    <li>@GetObjectValue(book , "Username")</li>
-                    <a>ระงับบัญชีชั่วคราว</a>
-                    <button onclick="open_popup(@GetObjectValue(book,"BookingID"))">ยกเลิกการจอง</button>
-                </div>
-                <div class="overlay" id="@String.Format("popup{0}",GetObjectValue(book,"BookingID"))">
-                    <div class="popup">
-                        คุณแน่ในหรือไม่ที่จะยกเลิกการจอง?
-                        <div class="confirm_to_delete">
-                            <button onclick="close_popup(@GetObjectValue(book,"BookingID"))">ไม่ทำ</button>
-                            <form asp-action="Delete" asp-route-id="@GetObjectValue(book,"BookingID")">
-                                <input type="submit" value="แน่ใจ" class="btn btn-danger" />
-                            </form>
+                    <div class="details">
+                        <div class="wrapper">
+                            <div class="topic">ห้อง</div>
+                            <div>@GetObjectValue(book, "LabName")</div>
                         </div>
+                        <div class="wrapper">
+                            <div class="topic">ช่วงเวลา</div>
+                            <div>@GetObjectValue(book, "Time")</div>
+                        </div>
+                        <div class="wrapper">
+                            <div class="topic">อุปกรณ์</div>
+                            <div>@GetObjectValue(book, "ItemName")</div>
+                        </div>
+                        <div class="wrapper">
+                            <div class="topic">ผู้จอง</div>
+                            <div>@GetObjectValue(book, "Username")</div>
+                        </div>
+                    </div>
 
+                    <button class="cancel-btn" onclick="openPopup(@GetObjectValue(book, "BookingID"))">
+                        ยกเลิกการจอง</button>
+                    <div class="overlay" id="@String.Format("popup{0}", GetObjectValue(book, "BookingID"))">
+                        <div class="popup">
+                            <i class="fas fa-exclamation-triangle big-icon"></i>
+                            <h2>คำเตือน</h2>
+                            <p>การยกเลิกจะไม่สามารถย้อนกลับได้</p>
+                            <div class="botton-group">
+                                <button class="popup-btn"
+                            onclick="closePopup(@GetObjectValue(book, "BookingID"))">ยกเลิก</button>
+                                <form asp-controller="Booking" asp-action="Cancel"
+                            asp-route-id="@GetObjectValue(book, "BookingID")">
+                                    <button class="popup-btn popup-btn-main">ยืนยัน</button>
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
         </div>
     }
 </div>
+<footer class="footer-space"></footer>
