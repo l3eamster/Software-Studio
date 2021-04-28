@@ -44,12 +44,16 @@ async function submitHandler(event, labId, userId = -1) {
   })
 
   // Post form
-  const res = await fetch('https://localhost:5001/Lab/Booking', {
+  const res = await fetch('/Lab/Booking', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ UserId: userId, LabId: labId, BookingList: result }),
+    body: JSON.stringify({
+      UserId: userId,
+      LabId: labId,
+      BookingList: result,
+    }),
   })
   window.location = res.url
   // const data = await res.text()

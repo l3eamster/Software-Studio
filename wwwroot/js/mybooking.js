@@ -1,5 +1,5 @@
 async function cancel(id) {
-  const res = await fetch(`https://localhost:5001/Booking/Cancel/${id}`, {
+  const res = await fetch(`/Booking/Cancel/${id}`, {
     method: 'POST',
   })
   const data = await res.text()
