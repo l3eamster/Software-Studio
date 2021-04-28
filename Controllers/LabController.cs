@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using DonutzStudio.Data;
 using DonutzStudio.Models;
+using System.Net.Http;
 
 namespace DonutzStudio.Controllers
 {
@@ -30,7 +31,9 @@ namespace DonutzStudio.Controllers
             }
 
             // Get Ming's labs data
-            ViewBag.ExternalLabs = null;
+            var json = await GetExternalLabs();
+            var exLabs = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ExternalLab>>(json);
+            ViewBag.ExternalLabs = exLabs;
 
             HttpContext.Session.Remove("Error");
             HttpContext.Session.Remove("Success");
@@ -115,52 +118,23 @@ namespace DonutzStudio.Controllers
             return Redirect($"/Lab/Booking/{form.LabId}");
         }
 
+        // GET: /Lab/GetData
         public async Task<string> GetData()
         {
             var labs = await _context.Lab.ToListAsync();
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(new
+            List<dynamic> data = new List<dynamic>();
+            for (var i = 0; i < 5; i++)
             {
-                lab1 = new
+                data.Add(new
                 {
-                    labName = labs.ElementAt(0).Name,
-                    itemName = labs.ElementAt(0).ItemName,
-                    labImage = labs.ElementAt(0).LabImage,
-                    itemAmount = labs.ElementAt(0).ItemCount,
-                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(0).Id),
-                },
-                lab2 = new
-                {
-                    labName = labs.ElementAt(1).Name,
-                    itemName = labs.ElementAt(1).ItemName,
-                    labImage = labs.ElementAt(1).LabImage,
-                    itemAmount = labs.ElementAt(1).ItemCount,
-                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(1).Id),
-                },
-                lab3 = new
-                {
-                    labName = labs.ElementAt(2).Name,
-                    itemName = labs.ElementAt(2).ItemName,
-                    labImage = labs.ElementAt(2).LabImage,
-                    itemAmount = labs.ElementAt(2).ItemCount,
-                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(2).Id),
-                },
-                lab4 = new
-                {
-                    labName = labs.ElementAt(3).Name,
-                    itemName = labs.ElementAt(3).ItemName,
-                    labImage = labs.ElementAt(3).LabImage,
-                    itemAmount = labs.ElementAt(3).ItemCount,
-                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(3).Id),
-                },
-                lab5 = new
-                {
-                    labName = labs.ElementAt(4).Name,
-                    itemName = labs.ElementAt(4).ItemName,
-                    labImage = labs.ElementAt(4).LabImage,
-                    itemAmount = labs.ElementAt(4).ItemCount,
-                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(4).Id),
-                },
-            });
+                    labName = labs.ElementAt(i).Name,
+                    itemName = labs.ElementAt(i).ItemName,
+                    labImage = labs.ElementAt(i).LabImage,
+                    itemAmount = labs.ElementAt(i).ItemCount,
+                    link = String.Format("https://{0}/Lab/Booking/{1}", Request.Host, labs.ElementAt(i).Id),
+                });
+            }
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
             return json;
         }
 
@@ -171,6 +145,33 @@ namespace DonutzStudio.Controllers
         }
 
         public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
+
+        private async Task<string> GetExternalLabs()
+        {
+            return "[{\"labName\":\"ห้องแอลฟา\",\"itemName\":\"ไม้บรรทัด1\",\"labImage\":\"https://www.oetker.ca/Recipe/Recipes/oetker.ca/ca-en/baking/image-thumb__24580__RecipeDetailsLightBox/farmers-salad.jpg\",\"itemAmount\":20,\"link\":\"/Lab/Booking/1\"},{\"labName\":\"ห้องเบตา\",\"itemName\":\"ไม้บรรทัด\",\"labImage\":\"https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.cookinglight.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2017%2F01%2Fmain%2Fhalf-moon-browned-omelet.jpg%3Fitok%3DmGBP10Co\",\"itemAmount\":6,\"link\":\"/Lab/Booking/1\"},{\"labName\":\"qqq\",\"itemName\":\"www\",\"labImage\":\"https://th-test-11.slatic.net/p/81e1bb7220056fc95dfbc664819b9d91.jpg\",\"itemAmount\":5,\"link\":\"/Lab/Booking/1\"},{\"labName\":\"Test2\",\"itemName\":\"asdfsda\",\"labImage\":\"https://www.cpbrandsite.com/contents/recipe/8pfgfhpu8lne4utnnh8qfjdleup17w1kzw3ubbhl.png\",\"itemAmount\":5,\"link\":\"/Lab/Booking/1\"},{\"labName\":\"Omega\",\"itemName\":\"Macbook\",\"labImage\":\"https://pbs.twimg.com/media/CzcftTpW8AA1_Ov.jpg\",\"itemAmount\":5,\"link\":\"/Lab/Booking/1\"}]";
+
+            string baseUrl = "https://random-data-api.com/api/blood/random_blood";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    using (HttpResponseMessage res = await client.GetAsync(baseUrl))
+                    {
+                        using (HttpContent content = res.Content)
+                        {
+                            var data = await content.ReadAsStringAsync();
+                            if (data == null) return "";
+                            return data;
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                return "";
+            }
+        }
 
 
         //
