@@ -41,12 +41,14 @@
         <span class="slash"> / </span>
         @Model.Name
     </h1>
-    <div class="container">
+    <div class="container" style="@String.Format("border-color:{0};", Model.Color)">
         <img class="lab-img" src="@Model.LabImage" />
         <img class="item-img" src="@Model.ItemImage" />
         <form class="booking-zone shadow-lg" id="form" onsubmit="(() => submitHandler(event, @Model.Id, 
              @ViewBag.UserId))(event)">
-            <h3 class="h3">เลือกช่วงเวลาที่จะใช้งาน</h3>
+            <h3 class="h3">เลือกช่วงเวลาที่จะใช้งาน
+                <span style="@String.Format("color:{0};", Model.Color)">@Model.ItemName</span>
+            </h3>
             <div class="time-detail">
                 <span>ช่วงเช้า 09:00 - 12:00</span>
                 <span>ช่วงบ่าย 13:00 - 16:00</span>

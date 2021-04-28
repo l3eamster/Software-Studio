@@ -44,11 +44,11 @@
         <span class="slash"> / </span>
         @Model.Name
     </h1>
-    <div class="container">
+    <div class="container" style="@String.Format("border-color:{0};", Model.Color)">
         <img class="lab-img" src="@Model.LabImage" />
         <img class="item-img" src="@Model.ItemImage" />
         <form asp-action="Edit" class="booking-zone shadow-lg">
-            <h3>ชื่อห้อง</h3>
+            <h3>รายละเอียดห้องปฏิบัติการ</h3>
             <div class="overflow">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">

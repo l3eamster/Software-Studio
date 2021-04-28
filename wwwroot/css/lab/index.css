@@ -27,7 +27,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: inherit;
-  border: 6px solid var(--main500);
+  border: 6px solid;
+  border-color: inherit;
 }
 
 .lab-card:hover::before {
@@ -45,5 +46,6 @@
   display: flex;
   flex: 1;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
 }

@@ -28,13 +28,13 @@ namespace DonutzStudio.Controllers
         {
             if (form.Password != form.Password2)
             {
-                HttpContext.Session.SetString("Error", "Password and Confirm password mismatch");
+                HttpContext.Session.SetString("Error", "ยืนยันรหัสผ่านไม่ตรงกับรหัสผ่าน");
                 return RedirectToAction("Index");
             }
             var formOld = _context.User.Where(m => m.Name == form.Username);
             if (formOld.Count() != 0)
             {
-                HttpContext.Session.SetString("Error", "Username already exist");
+                HttpContext.Session.SetString("Error", "มีบัญชีผู้ใช้นี้อยู่แล้ว");
                 return RedirectToAction("Index");
             }
 

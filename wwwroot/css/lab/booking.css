@@ -19,11 +19,13 @@
   position: relative;
   background: attr(data-img);
   border-radius: 10px;
+  border-top: 8px solid;
   overflow: hidden;
 }
 
 .overflow {
   overflow-y: scroll;
+  max-height: 360px;
 }
 
 .item-img {
