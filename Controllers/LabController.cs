@@ -28,6 +28,10 @@ namespace DonutzStudio.Controllers
             {
                 return Redirect("/Admin");
             }
+
+            // Get Ming's labs data
+            ViewBag.ExternalLabs = null;
+
             HttpContext.Session.Remove("Error");
             HttpContext.Session.Remove("Success");
             return View(await _context.Lab.ToListAsync());
@@ -109,6 +113,55 @@ namespace DonutzStudio.Controllers
             await _context.SaveChangesAsync();
             HttpContext.Session.SetString("Success", "การจองสำเร็จ");
             return Redirect($"/Lab/Booking/{form.LabId}");
+        }
+
+        public async Task<string> GetData()
+        {
+            var labs = await _context.Lab.ToListAsync();
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(new
+            {
+                lab1 = new
+                {
+                    labName = labs.ElementAt(0).Name,
+                    itemName = labs.ElementAt(0).ItemName,
+                    labImage = labs.ElementAt(0).LabImage,
+                    itemAmount = labs.ElementAt(0).ItemCount,
+                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(0).Id),
+                },
+                lab2 = new
+                {
+                    labName = labs.ElementAt(1).Name,
+                    itemName = labs.ElementAt(1).ItemName,
+                    labImage = labs.ElementAt(1).LabImage,
+                    itemAmount = labs.ElementAt(1).ItemCount,
+                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(1).Id),
+                },
+                lab3 = new
+                {
+                    labName = labs.ElementAt(2).Name,
+                    itemName = labs.ElementAt(2).ItemName,
+                    labImage = labs.ElementAt(2).LabImage,
+                    itemAmount = labs.ElementAt(2).ItemCount,
+                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(2).Id),
+                },
+                lab4 = new
+                {
+                    labName = labs.ElementAt(3).Name,
+                    itemName = labs.ElementAt(3).ItemName,
+                    labImage = labs.ElementAt(3).LabImage,
+                    itemAmount = labs.ElementAt(3).ItemCount,
+                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(3).Id),
+                },
+                lab5 = new
+                {
+                    labName = labs.ElementAt(4).Name,
+                    itemName = labs.ElementAt(4).ItemName,
+                    labImage = labs.ElementAt(4).LabImage,
+                    itemAmount = labs.ElementAt(4).ItemCount,
+                    link = String.Format("/Lab/Booking/{0}", labs.ElementAt(4).Id),
+                },
+            });
+            return json;
         }
 
         // Utilities

@@ -62,3 +62,7 @@ button {
   color: var(--yellow400);
   margin-right: 0.25rem;
 }
+
+.spacer {
+  height: 1rem;
+}

@@ -22,4 +22,24 @@
             </a>
         }
     </div>
+
+    <div class="spacer"></div>
+
+    <h1>ห้องปฏิบัติการพิเศษ</h1>
+    <div class="wrapper">
+        @foreach (var Lab in Model)
+        {
+            <a asp-action="Booking" asp-route-id="@Lab.Id">
+                <div class="lab-card shadow" style="@String.Format("border-color:{0};", Lab.Color)">
+                    <img class="lab-img" src="@Lab.LabImage" style="@String.Format("background:{0};", Lab.Color)" />
+                    <div class="lab-name">
+                        @Lab.Name
+                        <span style="@String.Format("color:{0};", Lab.Color)">@Lab.ItemName</span>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
 </div>
+
+<footer class="footer-space"></footer>
