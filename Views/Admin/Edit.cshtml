@@ -34,6 +34,8 @@
 }
 
 <link rel="stylesheet" href="~/css/lab/booking.css" />
+<link rel="stylesheet" href="~/css/loginregis.css" />
+
 <script defer src="~/js/lab/booking.js"></script>
 
 <div>
@@ -50,32 +52,32 @@
             <div class="overflow">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
+                    <label>ชื่อห้องปฏิบัติการ</label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ItemName" class="control-label"></label>
+                    <label>ชื่ออุปกรณ์</label>
                     <input asp-for="ItemName" class="form-control" />
                     <span asp-validation-for="ItemName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ItemCount" class="control-label"></label>
+                    <label>อุปกรณ์คงเหลือ</label>
                     <input asp-for="ItemCount" class="form-control" />
                     <span asp-validation-for="ItemCount" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="LabImage" class="control-label"></label>
+                    <label>รูปห้องปฏิบัติการ</label>
                     <input asp-for="LabImage" class="form-control" />
                     <span asp-validation-for="LabImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ItemImage" class="control-label"></label>
+                    <label>รูปอุปกรณ์</label>
                     <input asp-for="ItemImage" class="form-control" />
                     <span asp-validation-for="ItemImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Color" class="control-label"></label>
+                    <label>ธีมห้องปฏิบัติการ</label>
                     <input asp-for="Color" class="form-control" type="color" />
                     <span asp-validation-for="Color" class="text-danger"></span>
                 </div>
