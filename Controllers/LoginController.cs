@@ -23,6 +23,10 @@ namespace DonutzStudio.Controllers
         }
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("UserId") != null)
+            {
+                return Redirect("/");
+            }
             return View();
         }
 
