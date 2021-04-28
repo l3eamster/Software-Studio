@@ -4,6 +4,19 @@
     ViewData["Title"] = "ห้องปฏิบัติการ";
 }
 
+@functions {
+    public dynamic GetObjectValue(object o, string propertyName)
+    {
+        return o.GetType().GetProperty(propertyName).GetValue(o, null);
+    }
+
+    public string RandomColor()
+    {
+        string[] colors = { "#EB4347", "#2BB984", "#F29E2D", "#4481F1", "#8B5AF1", "#E84697", "#2EB8A6", "#6665EC", "#EF3D5F" };
+        return colors[new Random().Next(0, colors.Count())];
+    }
+}
+
 <link rel="stylesheet" href="~/css/lab/index.css" />
 
 <div>
@@ -27,14 +40,15 @@
 
     <h1>ห้องปฏิบัติการพิเศษ</h1>
     <div class="wrapper">
-        @foreach (var Lab in Model)
+        @foreach (var Lab in ViewBag.ExternalLabs)
         {
-            <a asp-action="Booking" asp-route-id="@Lab.Id">
-                <div class="lab-card shadow" style="@String.Format("border-color:{0};", Lab.Color)">
-                    <img class="lab-img" src="@Lab.LabImage" style="@String.Format("background:{0};", Lab.Color)" />
+            <a target="_blank" rel="noopener noreferrer" href="@GetObjectValue(Lab, "link")">
+                <div class="lab-card shadow" style="@String.Format("border-color:{0};", RandomColor())">
+                    <img class="lab-img" src="@GetObjectValue(Lab, "labImage")"
+                    style="@String.Format("background:{0};", RandomColor())" />
                     <div class="lab-name">
-                        @Lab.Name
-                        <span style="@String.Format("color:{0};", Lab.Color)">@Lab.ItemName</span>
+                        @GetObjectValue(Lab, "labName")
+                        <span style="@String.Format("color:{0};", RandomColor())">@GetObjectValue(Lab, "itemName")</span>
                     </div>
                 </div>
             </a>

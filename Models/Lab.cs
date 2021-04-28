@@ -13,4 +13,14 @@ namespace DonutzStudio.Models
         public string ItemImage { get; set; }
         public string LabImage { get; set; }
     }
+
+    public class ExternalLab
+    {
+        public string labName { get; set; }
+        public string itemName { get; set; }
+        public string labImage { get; set; }
+        public int itemAmount { get; set; }
+        public string link { get; set; }
+    }
+
 }
