@@ -30,6 +30,7 @@ namespace DonutzStudio.Controllers
             }
 
             var bookings = await _context.Booking.ToListAsync();
+            bookings = bookings.FindAll(m => DateTime.Compare(DateTime.Now.Date, m.Date) <= 0);
             var lab = await _context.Lab.ToListAsync();
 
             string[] TimeSlot = {
