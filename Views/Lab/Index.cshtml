@@ -42,13 +42,14 @@
     <div class="wrapper">
         @foreach (var Lab in ViewBag.ExternalLabs)
         {
+            var color = RandomColor();
             <a target="_blank" rel="noopener noreferrer" href="@GetObjectValue(Lab, "link")">
-                <div class="lab-card shadow" style="@String.Format("border-color:{0};", RandomColor())">
+                <div class="lab-card shadow" style="@String.Format("border-color:{0};", color)">
                     <img class="lab-img" src="@GetObjectValue(Lab, "labImage")"
-                    style="@String.Format("background:{0};", RandomColor())" />
+                    style="@String.Format("background:{0};", color)" />
                     <div class="lab-name">
                         @GetObjectValue(Lab, "labName")
-                        <span style="@String.Format("color:{0};", RandomColor())">@GetObjectValue(Lab, "itemName")</span>
+                        <span style="@String.Format("color:{0};", color)">@GetObjectValue(Lab, "itemName")</span>
                     </div>
                 </div>
             </a>
