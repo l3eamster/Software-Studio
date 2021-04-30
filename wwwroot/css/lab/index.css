@@ -40,6 +40,7 @@
   height: 220px;
   border-radius: 8px 8px 0 0;
   border: none;
+  object-fit: cover;
 }
 
 .lab-name {
