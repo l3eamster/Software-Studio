@@ -138,6 +138,13 @@ namespace DonutzStudio.Controllers
             return json;
         }
 
+        // GET: /Lab/GetExternalUrl
+        public async Task<string> GetExternalUrl()
+        {
+            string exUrl = Environment.GetEnvironmentVariable("EXTERNAL_LAB_URL");
+            return exUrl;
+        }
+
         // Utilities
         private bool IsBookingExist(Booking booking)
         {
