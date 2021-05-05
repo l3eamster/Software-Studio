@@ -139,7 +139,7 @@ namespace DonutzStudio.Controllers
         }
 
         // GET: /Lab/GetExternalUrl
-        public async Task<string> GetExternalUrl()
+        public string GetExternalUrl()
         {
             string exUrl = Environment.GetEnvironmentVariable("EXTERNAL_LAB_URL");
             return exUrl;
