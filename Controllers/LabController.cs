@@ -60,7 +60,7 @@ namespace DonutzStudio.Controllers
             List<dynamic> timelines = new List<dynamic>();
             for (var i = 0; i < 7; i++)
             {
-                var date = DateTime.Now.AddDays(i);
+                var date = DateTime.Now.AddHours(7).AddDays(i);
                 var bookings = _context.Booking.Where(m => m.LabId == id && m.Date.Date == date.Date);
                 var time0 = bookings.Where(m => m.Time == 0).Count();
                 var time1 = bookings.Where(m => m.Time == 1).Count();

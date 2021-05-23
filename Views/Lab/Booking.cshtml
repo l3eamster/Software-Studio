@@ -16,7 +16,7 @@
     {
         return
         GetObjectValue(date, "Time" + i.ToString()) > 0 &&
-        DateTime.Compare(DateTime.Now, GetObjectValue(date, "Date").Date.AddHours(9 + i * 4)) < 0;
+        DateTime.Compare(DateTime.Now.AddHours(7), GetObjectValue(date, "Date").Date.AddHours(9 + i * 4)) < 0;
     }
 
     public bool CheckDisabled(object date, int i)
