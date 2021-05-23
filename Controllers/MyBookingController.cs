@@ -78,8 +78,8 @@ namespace DonutzStudio.Controllers
 
         public bool CheckAvailable(DateTime date, int time)
         {
-            return DateTime.Compare(DateTime.Now.Date, date.Date) <= 0 &&
-            DateTime.Compare(DateTime.Now, date.Date.AddHours(9 + time * 4)) < 0;
+            return DateTime.Compare(DateTime.Now.AddHours(7).Date, date.Date) <= 0 &&
+            DateTime.Compare(DateTime.Now.AddHours(7), date.Date.AddHours(9 + time * 4)) < 0;
         }
     }
 }
