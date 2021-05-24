@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
 using DonutzStudio.Models;
-using System;
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +17,8 @@ namespace DonutzStudio.Controllers
         {
             _context = context;
         }
+
+        // GET: /Admin
         public async Task<IActionResult> Index()
         {
             if (HttpContext.Session.GetInt32("IsAdmin") != 1)
@@ -32,6 +30,7 @@ namespace DonutzStudio.Controllers
             return View(await _context.Lab.ToListAsync());
         }
 
+        // GET: /Admin/Edit/[id]
         public async Task<IActionResult> Edit(int? id)
         {
             if (HttpContext.Session.GetInt32("IsAdmin") != 1)
@@ -45,6 +44,7 @@ namespace DonutzStudio.Controllers
             return View(lab);
         }
 
+        // POST: /Admin/Edit/[id]
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ItemName,ItemCount,ItemImage,LabImage,Color")] Lab lab)
         {
@@ -81,12 +81,15 @@ namespace DonutzStudio.Controllers
             return View(lab);
         }
 
+        // GET: /Admin/RemoveAllToast
         public string RemoveAllToast()
         {
             HttpContext.Session.Remove("Error");
             HttpContext.Session.Remove("Success");
             return "OK";
         }
+
+        // Utilities
         private bool labExists(int id)
         {
             return _context.Lab.Any(e => e.Id == id);

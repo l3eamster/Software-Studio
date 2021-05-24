@@ -1,16 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
+
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using DonutzStudio.Data;
-using DonutzStudio.Models;
-
 
 namespace DonutzStudio.Controllers
 {
@@ -22,6 +19,7 @@ namespace DonutzStudio.Controllers
             _context = context;
         }
 
+        // GET: /Booking
         public async Task<IActionResult> Index()
         {
             if (HttpContext.Session.GetInt32("IsAdmin") != 1)
@@ -72,26 +70,10 @@ namespace DonutzStudio.Controllers
                 });
             }
             ViewBag.Mybooking = group;
-            // Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(group));
             return View();
         }
 
-        // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (HttpContext.Session.GetInt32("IsAdmin") != 1)
-            {
-                return Redirect("/");
-            }
-
-            var movie = await _context.Booking.FindAsync(id);
-            _context.Booking.Remove(movie);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
-
+        // POST: Booking/Cancel/[id]
         [HttpPost]
         public async Task<IActionResult> Cancel(int id)
         {
@@ -104,6 +86,12 @@ namespace DonutzStudio.Controllers
                 return Redirect("/Booking");
             }
             return Redirect("/MyBooking");
+        }
+
+        // Utilities
+        private dynamic GetObjectValue(object o, string propertyName)
+        {
+            return o.GetType().GetProperty(propertyName).GetValue(o, null);
         }
     }
 

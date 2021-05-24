@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -118,7 +117,7 @@ namespace DonutzStudio.Controllers
             return Redirect($"/Lab/Booking/{form.LabId}");
         }
 
-        // GET: /Lab/GetData
+        // (API) GET: /Lab/GetData
         public async Task<string> GetData()
         {
             var labs = await _context.Lab.ToListAsync();
@@ -144,13 +143,11 @@ namespace DonutzStudio.Controllers
             return _context.Booking.Any(m => m.LabId == booking.LabId && m.UserId == booking.UserId && m.Date.Date == booking.Date.Date && m.Time == booking.Time);
         }
 
-        public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
+        private dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
 
         private async Task<string> GetExternalLabs()
         {
-            return "[{\"labName\":\"ห้องแอลฟา\",\"itemName\":\"ไม้บรรทัด1\",\"labImage\":\"https://www.oetker.ca/Recipe/Recipes/oetker.ca/ca-en/baking/image-thumb__24580__RecipeDetailsLightBox/farmers-salad.jpg\",\"itemAmount\":20,\"link\":\"/Lab/Booking/1\"},{\"labName\":\"ห้องเบตา\",\"itemName\":\"ไม้บรรทัด\",\"labImage\":\"https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.cookinglight.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2017%2F01%2Fmain%2Fhalf-moon-browned-omelet.jpg%3Fitok%3DmGBP10Co\",\"itemAmount\":6,\"link\":\"/Lab/Booking/1\"},{\"labName\":\"qqq\",\"itemName\":\"www\",\"labImage\":\"https://th-test-11.slatic.net/p/81e1bb7220056fc95dfbc664819b9d91.jpg\",\"itemAmount\":5,\"link\":\"/Lab/Booking/1\"},{\"labName\":\"Test2\",\"itemName\":\"asdfsda\",\"labImage\":\"https://www.cpbrandsite.com/contents/recipe/8pfgfhpu8lne4utnnh8qfjdleup17w1kzw3ubbhl.png\",\"itemAmount\":5,\"link\":\"/Lab/Booking/1\"},{\"labName\":\"Omega\",\"itemName\":\"Macbook\",\"labImage\":\"https://pbs.twimg.com/media/CzcftTpW8AA1_Ov.jpg\",\"itemAmount\":5,\"link\":\"/Lab/Booking/1\"}]";
-
-            string baseUrl = "https://random-data-api.com/api/blood/random_blood";
+            string baseUrl = "http://lab-m.herokuapp.com/api/labapi";
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -202,7 +199,7 @@ namespace DonutzStudio.Controllers
             return View(lab);
         }
 
-        // GET: /Lab/DangerouslyCreateLab/[Id]
+        // GET: /Lab/DangerouslyDeleteLab/[Id]
         public async Task<IActionResult> DangerouslyDeleteLab(int id)
         {
             if (HttpContext.Session.GetInt32("IsAdmin") != 1)

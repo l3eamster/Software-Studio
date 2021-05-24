@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
+
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using DonutzStudio.Data;
-using DonutzStudio.Models;
 
 namespace DonutzStudio.Controllers
 {
@@ -20,6 +18,8 @@ namespace DonutzStudio.Controllers
         {
             _context = context;
         }
+
+        // GET: /MyBooking
         public async Task<IActionResult> Index()
         {
             if (HttpContext.Session.GetInt32("UserId") == null)
@@ -71,12 +71,16 @@ namespace DonutzStudio.Controllers
                 });
             }
             ViewBag.Mybooking = group;
-            // Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(group));
             return View();
         }
-        public dynamic GetObjectValue(object o, string propertyName) { return o.GetType().GetProperty(propertyName).GetValue(o, null); }
 
-        public bool CheckAvailable(DateTime date, int time)
+        // Utilities
+        private dynamic GetObjectValue(object o, string propertyName)
+        {
+            return o.GetType().GetProperty(propertyName).GetValue(o, null);
+        }
+
+        private bool CheckAvailable(DateTime date, int time)
         {
             return DateTime.Compare(DateTime.Now.Date, date.Date) <= 0 &&
             DateTime.Compare(DateTime.Now, date.Date.AddHours(9 + time * 4)) < 0;

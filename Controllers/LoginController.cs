@@ -1,14 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
 using DonutzStudio.Models;
-using System;
 
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using DonutzStudio.Data;
 
@@ -21,6 +15,8 @@ namespace DonutzStudio.Controllers
         {
             _context = context;
         }
+
+        // GET: /Login
         public IActionResult Index()
         {
             if (HttpContext.Session.GetString("UserId") != null)
@@ -30,6 +26,7 @@ namespace DonutzStudio.Controllers
             return View();
         }
 
+        // GET: /Logout
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("Username");
@@ -41,6 +38,7 @@ namespace DonutzStudio.Controllers
         }
 
 
+        // POST: /LoginForm
         [HttpPost]
         public IActionResult LoginForm([Bind("Username, Password")] LoginForm form)
         {
@@ -82,7 +80,6 @@ namespace DonutzStudio.Controllers
                 HttpContext.Session.SetInt32("UserId", user.First().Id);
                 return Redirect("/");
             }
-
         }
     }
 }
